@@ -18,14 +18,15 @@ class Shape extends React.Component {
 
    componentDidMount() {
       const renderer = new THREE.WebGLRenderer();
-      renderer.setSize(window.innerWidth, window.innerHeight);
       document.body.appendChild(renderer.domElement);
+      renderer.setSize(window.innerWidth, window.innerHeight);
       this.renderer = renderer
 
       this.createObject()
    };
 
    createObject() {
+
       const { sizeValue } = this.state;
 
       const scene = new THREE.Scene();
@@ -36,18 +37,21 @@ class Shape extends React.Component {
          1000
       );
 
-      const geometry = new THREE.BoxGeometry(sizeValue, sizeValue, sizeValue);
-      const material = new THREE.MeshPhongMaterial({ color: 99999999 });
+      // let color = new THREE.Color( 0xf80d18 );
+
+      const geometry = new THREE.CubeGeometry(sizeValue, sizeValue, sizeValue);
+      const material = new THREE.MeshPhongMaterial({ color: 0xff0000 });
       const cube = new THREE.Mesh(geometry, material);
 
       camera.position.z = 25;
 
-      const pointLight = new THREE.PointLight(0xff0000);
+      const pointLight = new THREE.PointLight(0xffffff);
       pointLight.position.set(0, 200, 500);
 
       scene.add(pointLight);
       scene.add(cube);
 
+      // this.color = color
       this.scene = scene
       this.camera = camera
       this.material = material
@@ -87,7 +91,6 @@ class Shape extends React.Component {
    componentWillReceiveProps(nextProps) {
       const { sizeValue: sizeValueNext } = nextProps;
       this.setState({ sizeValue: sizeValueNext }, () => this.createObject());
-      ;
    };
 
    render() {
@@ -100,25 +103,3 @@ class Shape extends React.Component {
 }
 
 export default Shape;
-
-      // this.setState({ scene: scene });
-      // this.setState({ camera: camera });
-      // this.setState({ renderer: renderer});
-
-      // const setObjectStates = () => {
-      //    this.setState({ scene: scene });
-      //    this.setState({ camera: camera });
-      //    this.setState({ renderer: renderer});
-      //    return this.animateObject()
-      // }
-      
-      // setObjectStates()
-
-   // componentDidUpdate() {
-   //    const { scene, camera, renderer } = this.state;
-
-   // }
-
-
-
-
