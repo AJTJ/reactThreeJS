@@ -24,6 +24,7 @@
     "gulp-sass": "^3.1.0",
     "react": "^16.1.1",
     "react-dom": "^16.1.1",
+    "three": "^0.90.0",
     "vinyl-buffer": "^1.0.0",
     "vinyl-source-stream": "^1.1.0"
   },
