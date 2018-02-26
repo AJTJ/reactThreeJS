@@ -10,47 +10,40 @@ class App extends React.Component {
 
       this.state = {
          sizeValue: 1,
-         menuVisible: true,
+         controlsHidden: false,
          color: "red"
       }   
 
       this.sizeChange = this.sizeChange.bind(this);
       this.getRandomColor = this.getRandomColor.bind(this);
+      this.toggleControls = this.toggleControls.bind(this);
    }
 
    getRandomColor() {
-      axios.get('http://www.colr.org/json/color/random')
+      axios.get('https://fun-fun-colors.herokuapp.com/randomcolor')
       .then((res) => {
-         // console.log(res.data.new_color);
-         this.setState({color: res.data.new_color}, () => console.log(this.state.color));
-      });
+         this.setState({color: res.data.color});
+      })
    }
 
    sizeChange(e) {
       this.setState({sizeValue: e.target.value});
    }
 
+   toggleControls(e) {
+      e.preventDefault();
+      this.setState({controlsHidden: !this.state.controlsHidden});
+   }
+
     render() {
       return (
-         <div>
-            <button onClick={this.getRandomColor}>Get Color</button>
-            <Controls sizeValue={this.state.sizeValue} sizeChange={this.sizeChange} />
+         
+         <div className="mainDiv" >
+            <Controls controlsHidden={this.state.controlsHidden} toggleControls={this.toggleControls} sizeValue={this.state.sizeValue} sizeChange={this.sizeChange} getRandomColor={this.getRandomColor} color={this.state.color} />
             <Shape color={this.state.color} sizeValue={this.state.sizeValue}/>
         </div>
       )
-    }
+   }
 }
 
 ReactDOM.render(<App/>, document.getElementById('app'));
-
-   // toggleControls(e) {
-   //    this.state.menuVisible = true ? this.setState({menuVisible = false}) : this.setState({menuVisible = true});
-   // }
-
-      // fetch(`http://www.colr.org/json/color/random`, {
-   //    method: 'GET',
-   // })
-   // .then((resp) => resp.json())
-   // .then((data) => {
-   // console.log(data.new_color);
-   // });

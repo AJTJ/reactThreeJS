@@ -1,0 +1,21 @@
+$mainFont: 'Dosis', sans-serif;
+
+$mainColor: rgba(218, 218, 218, 0.904);
+
+body, input, a {
+   font-family: $mainFont;
+   color: $mainColor;
+}
+
+p {
+   margin: 5px;
+}
+
+span {
+   font-weight: 700;
+   font-size: 1.2rem;
+}
+
+a {
+   text-decoration: none;
+}

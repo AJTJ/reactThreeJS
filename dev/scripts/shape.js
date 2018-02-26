@@ -7,6 +7,7 @@ class Shape extends React.Component {
 
       this.state = {
          sizeValue: 1,
+         color: "red"
       }
 
       this.createObject = this.createObject.bind(this)
@@ -27,35 +28,27 @@ class Shape extends React.Component {
 
    createObject() {
 
-      const { sizeValue } = this.state;
+      let { sizeValue, color } = this.state;
 
-      const scene = new THREE.Scene();
-      const camera = new THREE.PerspectiveCamera(
-         75, 
-         window.innerWidth/window.innerHeight, 
-         0.1, 
-         1000
-      );
+      let scene = new THREE.Scene();
+      let camera = new THREE.PerspectiveCamera(75, window.innerWidth/window.innerHeight, 0.1, 1000);
 
-      // let color = new THREE.Color( 0xf80d18 );
+      let geometry = new THREE.CubeGeometry(sizeValue, sizeValue, sizeValue, 5, 5, 2);
+      let material = new THREE.MeshPhongMaterial({ color: color });
+      let shape = new THREE.Mesh(geometry, material);
 
-      const geometry = new THREE.CubeGeometry(sizeValue, sizeValue, sizeValue);
-      const material = new THREE.MeshPhongMaterial({ color: 0xff0000 });
-      const cube = new THREE.Mesh(geometry, material);
+      camera.position.z = 15;
 
-      camera.position.z = 25;
-
-      const pointLight = new THREE.PointLight(0xffffff);
+      let pointLight = new THREE.PointLight(0xffffff);
       pointLight.position.set(0, 200, 500);
 
       scene.add(pointLight);
-      scene.add(cube);
+      scene.add(shape);
 
-      // this.color = color
       this.scene = scene
       this.camera = camera
       this.material = material
-      this.cube = cube
+      this.shape = shape
 
       this.mount.appendChild(this.renderer.domElement)
       this.start()
@@ -77,8 +70,8 @@ class Shape extends React.Component {
    };
 
    animate() {
-      this.cube.rotation.x += 0.005;
-      this.cube.rotation.y += 0.005;
+      this.shape.rotation.x += 0.005;
+      this.shape.rotation.y += 0.005;
       
       this.renderScene()
       this.frameId = window.requestAnimationFrame(this.animate)
@@ -89,8 +82,11 @@ class Shape extends React.Component {
    };
 
    componentWillReceiveProps(nextProps) {
-      const { sizeValue: sizeValueNext } = nextProps;
-      this.setState({ sizeValue: sizeValueNext }, () => this.createObject());
+      if ((this.props.color === nextProps.color) && (this.props.sizeValue === nextProps.sizeValue)) {
+         return false;
+      }
+      const { sizeValue: sizeValueNext, color: colorNext  } = nextProps;
+      this.setState({ sizeValue: sizeValueNext, color: colorNext }, () => this.createObject());
    };
 
    render() {
