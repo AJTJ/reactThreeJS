@@ -7,7 +7,8 @@ class Shape extends React.Component {
 
       this.state = {
          sizeValue: 1,
-         color: "red"
+         color: "red",
+         vertices: 0
       }
 
       this.createObject = this.createObject.bind(this)
@@ -28,12 +29,12 @@ class Shape extends React.Component {
 
    createObject() {
 
-      let { sizeValue, color } = this.state;
+      let { sizeValue, color, vertices } = this.state;
 
       let scene = new THREE.Scene();
       let camera = new THREE.PerspectiveCamera(75, window.innerWidth/window.innerHeight, 0.1, 1000);
 
-      let geometry = new THREE.CubeGeometry(sizeValue, sizeValue, sizeValue, 5, 5, 2);
+      let geometry = new THREE.TetrahedronGeometry(sizeValue, vertices);
       let material = new THREE.MeshPhongMaterial({ color: color });
       let shape = new THREE.Mesh(geometry, material);
 
@@ -82,11 +83,11 @@ class Shape extends React.Component {
    };
 
    componentWillReceiveProps(nextProps) {
-      if ((this.props.color === nextProps.color) && (this.props.sizeValue === nextProps.sizeValue)) {
+      if ((this.props.color === nextProps.color) && (this.props.sizeValue === nextProps.sizeValue) && (this.props.vertices === nextProps.vertices)) {
          return false;
       }
-      const { sizeValue: sizeValueNext, color: colorNext  } = nextProps;
-      this.setState({ sizeValue: sizeValueNext, color: colorNext }, () => this.createObject());
+      const { sizeValue: sizeValueNext, color: colorNext, vertices: verticesNext  } = nextProps;
+      this.setState({ sizeValue: sizeValueNext, color: colorNext, vertices: verticesNext }, () => this.createObject());
    };
 
    render() {

@@ -10,9 +10,13 @@ class Controls extends React.Component {
          <form className={`controlsForm ${this.props.controlsHidden ? 'controlsHidden' : ''}`} action="">
 
             <h3>react and three.js experiment</h3>
-            <label>Shape Size</label>
 
+
+            <label>Shape Size</label>
             <input onChange={this.props.sizeChange} className="sizeSlider" type="range" min="1" max="10" value={this.props.sizeValue} />
+
+            <label>Shape Vertices</label>
+            <input onChange={this.props.verticesChange} type="range" min="0" max="5" value={this.props.vertices} />
 
             <div className="colorButtonDiv"><input onClick={this.props.getRandomColor} className="randomColorButton" type="button" value="Change color"/></div>
             <p>Current Color: <span style={spanStyle}>{this.props.color}</span></p>

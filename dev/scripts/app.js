@@ -11,12 +11,14 @@ class App extends React.Component {
       this.state = {
          sizeValue: 1,
          controlsHidden: false,
-         color: "red"
+         color: "red",
+         vertices: 0
       }   
 
       this.sizeChange = this.sizeChange.bind(this);
       this.getRandomColor = this.getRandomColor.bind(this);
       this.toggleControls = this.toggleControls.bind(this);
+      this.verticesChange = this.verticesChange.bind(this);
    }
 
    getRandomColor() {
@@ -30,6 +32,10 @@ class App extends React.Component {
       this.setState({sizeValue: e.target.value});
    }
 
+   verticesChange(e) {
+      this.setState({vertices: e.target.value}, () => console.log(this.state.vertices) );
+   }
+
    toggleControls(e) {
       e.preventDefault();
       this.setState({controlsHidden: !this.state.controlsHidden});
@@ -39,8 +45,8 @@ class App extends React.Component {
       return (
          
          <div className="mainDiv" >
-            <Controls controlsHidden={this.state.controlsHidden} toggleControls={this.toggleControls} sizeValue={this.state.sizeValue} sizeChange={this.sizeChange} getRandomColor={this.getRandomColor} color={this.state.color} />
-            <Shape color={this.state.color} sizeValue={this.state.sizeValue}/>
+            <Controls vertices={this.state.vertices} verticesChange={this.verticesChange} controlsHidden={this.state.controlsHidden} toggleControls={this.toggleControls} sizeValue={this.state.sizeValue} sizeChange={this.sizeChange} getRandomColor={this.getRandomColor} color={this.state.color} />
+            <Shape color={this.state.color} sizeValue={this.state.sizeValue} vertices={this.state.vertices} />
         </div>
       )
    }
