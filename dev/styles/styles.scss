@@ -16,6 +16,10 @@
    text-align: center;
    border-radius: 5px;
    background: rgba(0, 0, 0, 0.123);
+
+   h3 {
+      font-size: 1.4rem;
+   }
 }
 
 @media (max-width: 800px) {
@@ -56,6 +60,14 @@
    padding: 15px 50px 0;
    margin-top: 15px;
    border-top: 1px solid rgba($color: #ffffff, $alpha: 0.2 );
+   
+   span {
+      font-size: 1rem;
+   }
+
+   .socials {
+      font-size: 1.2rem;
+   }
 
    a {
       padding: 5px 5px;
