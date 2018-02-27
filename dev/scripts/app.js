@@ -4,19 +4,23 @@ import Shape from './shape.js';
 import Controls from './controls.js';
 import axios from 'axios';
 
+//NOTE ON RESPONSIVENESS: the canvas will automatically resize to the current browser size if you refresh the browser.
+
 class App extends React.Component {
    constructor() {
       super()
 
       this.state = {
-         sizeValue: 1,
+         sizeValue: 5,
          controlsHidden: false,
          color: "red",
+         lightsColor: "white",
          vertices: 0
       }   
 
       this.sizeChange = this.sizeChange.bind(this);
       this.getRandomColor = this.getRandomColor.bind(this);
+      this.getRandomLightsColor = this.getRandomLightsColor.bind(this);
       this.toggleControls = this.toggleControls.bind(this);
       this.verticesChange = this.verticesChange.bind(this);
    }
@@ -25,6 +29,13 @@ class App extends React.Component {
       axios.get('https://fun-fun-colors.herokuapp.com/randomcolor')
       .then((res) => {
          this.setState({color: res.data.color});
+      })
+   }
+
+   getRandomLightsColor() {
+      axios.get('https://fun-fun-colors.herokuapp.com/randomcolor')
+      .then((res) => {
+         this.setState({lightsColor: res.data.color});
       })
    }
 
@@ -43,10 +54,9 @@ class App extends React.Component {
 
     render() {
       return (
-         
          <div className="mainDiv" >
-            <Controls vertices={this.state.vertices} verticesChange={this.verticesChange} controlsHidden={this.state.controlsHidden} toggleControls={this.toggleControls} sizeValue={this.state.sizeValue} sizeChange={this.sizeChange} getRandomColor={this.getRandomColor} color={this.state.color} />
-            <Shape color={this.state.color} sizeValue={this.state.sizeValue} vertices={this.state.vertices} />
+            <Controls vertices={this.state.vertices} verticesChange={this.verticesChange} controlsHidden={this.state.controlsHidden} toggleControls={this.toggleControls} sizeValue={this.state.sizeValue} sizeChange={this.sizeChange} getRandomColor={this.getRandomColor} color={this.state.color} getRandomLightsColor={this.getRandomLightsColor} lightsColor={this.state.lightsColor} />
+            <Shape lightsColor={this.state.lightsColor} color={this.state.color} sizeValue={this.state.sizeValue} vertices={this.state.vertices} />
         </div>
       )
    }

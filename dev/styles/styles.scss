@@ -2,8 +2,6 @@
 @import "global";
 @import "slider";
 
-
-
 .controlsForm {
    position: absolute;
    display: flex;
@@ -16,10 +14,26 @@
    border: 1px solid rgba($color: #ffffff, $alpha: 0.2 );
    transition: all 1s;
    text-align: center;
+   border-radius: 5px;
+   background: rgba(0, 0, 0, 0.123);
+}
+
+@media (max-width: 800px) {
+   .controlsForm {
+      background: rgba(0, 0, 0, 0.788);
+   }
 }
 
 .controlsHidden {
-   left: -340px;
+   left: -315px;
+}
+
+.labelDiv {
+   margin: 5px 0;
+}
+
+.sliderDiv {
+   margin: 10px 0;
 }
 
 .colorButtonDiv {
@@ -29,9 +43,23 @@
 
 .randomColorButton {
    margin-top: 20px;
-   padding: 5px;
+   border-radius: 3px;
+   padding: 8px;
    width: 150px;
    background: transparent;
+}
+
+.nameSocials {
+   display: flex;
+   align-items: center;
+   justify-content: space-around;
+   padding: 15px 50px 0;
+   margin-top: 15px;
+   border-top: 1px solid rgba($color: #ffffff, $alpha: 0.2 );
+
+   a {
+      padding: 5px 5px;
+   }
 }
 
 .showControlsButton {
