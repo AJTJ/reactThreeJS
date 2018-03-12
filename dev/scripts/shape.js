@@ -12,15 +12,19 @@ class Shape extends React.Component {
          vertices: 0,
          shapeRotationX : 0,
          shapeRotationY : 0,
-         bulb1Speed : 0,
-         bulb2Speed : 0,
-         bulb3Speed : 0,   
-         bulbLight1PositionX : 0,
-         bulbLight1PositionZ : 0,         
-         bulbLight2PositionX : 0,
-         bulbLight2PositionZ : 0,         
-         bulbLight3PositionX : 0,
-         bulbLight3PositionZ : 0,
+         middleBulbDistance : 0,
+         bottomBulbDistance : 0,
+         topBulbDistance : 0,
+
+         middleBulbSpeed : 0.004,
+         topBulbSpeed: 0.003,
+         bottomBulbSpeed: 0.005,
+         // middleBulbPositionX : 0,
+         // middleBulbPositionZ : 0,         
+         // bottomBulbPositionX : 0,
+         // bottomBulbPositionZ : 0,         
+         // topBulbPositionX : 0,
+         // topBulbPositionZ : 0,
          
       }
 
@@ -70,18 +74,18 @@ class Shape extends React.Component {
       });
 
       //BULB 1
-      let bulbLight1 = new THREE.PointLight( lightsColor, 1, 80, 5 );
-      bulbLight1.add( new THREE.Mesh( bulbGeometry, bulbMat ) );
-      bulbLight1.position.set( -7.5, 0, 10 );
+      let MiddleBulb = new THREE.PointLight( lightsColor, 1, 80, 5 );
+      MiddleBulb.add( new THREE.Mesh( bulbGeometry, bulbMat ) );
+      MiddleBulb.position.set( -7.5, 0, 10 );
 
       //BULB 2
-      let bulbLight2 = new THREE.PointLight( lightsColor, 1, 80, 5 );
-      bulbLight2.add( new THREE.Mesh( bulbGeometry, bulbMat ) );
-      bulbLight2.position.set( 0, -9, 0 );      
+      let BottomBulb = new THREE.PointLight( lightsColor, 1, 80, 5 );
+      BottomBulb.add( new THREE.Mesh( bulbGeometry, bulbMat ) );
+      BottomBulb.position.set( 0, -9, 0 );      
       //BULB 3
-      let bulbLight3 = new THREE.PointLight( lightsColor, 1, 80, 5 );
-      bulbLight3.add( new THREE.Mesh( bulbGeometry, bulbMat ) );
-      bulbLight3.position.set( 0, 9, 0 );     
+      let TopBulb = new THREE.PointLight( lightsColor, 1, 80, 5 );
+      TopBulb.add( new THREE.Mesh( bulbGeometry, bulbMat ) );
+      TopBulb.position.set( 0, 9, 0 );     
 
       //GENERAL POINTLIGHT
       let pointLight = new THREE.PointLight(0xffffff, 1, 60, 5);
@@ -107,17 +111,17 @@ class Shape extends React.Component {
       floorMesh2.position.set( 0, 10, 0 );
 
       //OBJECTS IN SCENE
-      scene.add( bulbLight1 );
-      scene.add( bulbLight2 );
-      scene.add( bulbLight3 );
+      scene.add( MiddleBulb );
+      scene.add( BottomBulb );
+      scene.add( TopBulb );
       scene.add( pointLight );
       scene.add( shape );
       scene.add( floorMesh );
       scene.add( floorMesh2 );
 
-      this.bulbLight1 = bulbLight1
-      this.bulbLight2 = bulbLight2
-      this.bulbLight3 = bulbLight3
+      this.middleBulb = MiddleBulb
+      this.bottomBulb = BottomBulb
+      this.topBulb = TopBulb
       
       this.scene = scene
       this.camera = camera
@@ -128,16 +132,15 @@ class Shape extends React.Component {
       this.shape.shapeRotationY = this.state.shapeRotationY;
 
       //CURRENT BULB POSITION      
-      this.bulbLight1.position.x = this.state.bulbLight1PositionX;
-      this.bulbLight1.position.z = this.state.bulbLight1PositionZ;      
-      this.bulbLight2.position.x = this.state.bulbLight2PositionX;
-      this.bulbLight2.position.z = this.state.bulbLight2PositionZ;      
-      this.bulbLight3.position.x = this.state.bulbLight3PositionX;
-      this.bulbLight3.position.z = this.state.bulbLight3PositionZ;
+      // this.middleBulb.position.x = this.state.middleBulbPositionX;
+      // this.middleBulb.position.z = this.state.middleBulbPositionZ;      
+      // this.bottomBulb.position.x = this.state.bottomBulbPositionX;
+      // this.bottomBulb.position.z = this.state.bottomBulbPositionZ;      
+      // this.topBulb.position.x = this.state.topBulbPositionX;
+      // this.topBulb.position.z = this.state.topBulbPositionZ;
 
       this.mount.appendChild(this.renderer.domElement)
       this.start()
-
    };
 
    componentWillUnmount() {
@@ -156,42 +159,59 @@ class Shape extends React.Component {
    };
 
    animate() {
+
+      let middleBulbSpeed = Number(this.state.middleBulbSpeed)
+      let topBulbSpeed = Number(this.state.topBulbSpeed)
+      let bottomBulbSpeed = Number(this.state.bottomBulbSpeed)
+
+      //THE DISTANCE THAT THE THINGS MOVE
       let newShapeStateX = this.state.shapeRotationX += 0.005;
       let newShapeStateY = this.state.shapeRotationY += 0.005;
-      let newBulb1Speed = this.state.bulb1Speed += 0.004;
-      let newBulb2Speed = this.state.bulb2Speed += 0.003;
-      let newBulb3Speed = this.state.bulb3Speed += 0.005;
+      let newMiddleBulbDistance = this.state.middleBulbDistance += middleBulbSpeed;
+      let newBottomBulbDistance = this.state.bottomBulbDistance += bottomBulbSpeed;
+      let newTopBulbDistance = this.state.topBulbDistance += topBulbSpeed;
 
-      let newBulbLight1PositionX = this.bulbLight1.position.x = -11*Math.cos(newBulb1Speed) + 0;
-      let newBulbLight1PositionZ = this.bulbLight1.position.z = 11*Math.sin(newBulb1Speed) + 0;
+      //THE PATH THAT THE BULBS TAKE RELATED TO THE DISTANCE THEY'VE MOVED.
+      this.middleBulb.position.x = -11*Math.cos(newMiddleBulbDistance) + 0;
+      this.middleBulb.position.z = 11*Math.sin(newMiddleBulbDistance) + 0;
       
-      let newBulbLight2PositionX = this.bulbLight2.position.x = 6*Math.cos(newBulb2Speed) + 0;
-      let newBulbLight2PositionZ = this.bulbLight2.position.z = 6*Math.sin(newBulb2Speed) + 5;
+      this.bottomBulb.position.x = 6*Math.cos(newBottomBulbDistance) + 0;
+      this.bottomBulb.position.z = 6*Math.sin(newBottomBulbDistance) + 5;
 
-      let newBulbLight3PositionX = this.bulbLight3.position.x = 7*Math.cos(newBulb3Speed) + 0;
-      let newBulbLight3PositionZ = this.bulbLight3.position.z = 7*Math.sin(newBulb3Speed) + 5;
+      this.topBulb.position.x = 7*Math.cos(newTopBulbDistance) + 0;
+      this.topBulb.position.z = 7*Math.sin(newTopBulbDistance) + 5;
+
+      let newMiddleBulbPositionX = this.middleBulb.position.x = -11*Math.cos(newMiddleBulbDistance) + 0;
+      let newMiddleBulbPositionZ = this.middleBulb.position.z = 11*Math.sin(newMiddleBulbDistance) + 0;
+
+      // let newBottomBulbPositionX = this.bottomBulb.position.x = 6*Math.cos(newBottomBulbDistance) + 0;
+      // let newBottomBulbPositionZ = this.bottomBulb.position.z = 6*Math.sin(newBottomBulbDistance) + 5;
+
+      // let newTopBulbPositionX = this.topBulb.position.x = 7*Math.cos(newTopBulbDistance) + 0;
+      // let newTopBulbPositionZ = this.topBulb.position.z = 7*Math.sin(newTopBulbDistance) + 5;
 
       this.setState({
+         //STORING STATE FOR THE SHAPES ROTATION DISTANCE, FOR WHEN A NEW SHAPE IS SPAWNED
          shapeRotationX : newShapeStateX,
          shapeRotationY : newShapeStateY,   
-         bulb1Speed : newBulb1Speed,
-         bulb2Speed : newBulb2Speed,
-         bulb3Speed : newBulb3Speed,
-         bulbLight1PositionX : newBulbLight1PositionX,
-         bulbLight1PositionZ : newBulbLight1PositionZ,   
-         bulbLight2PositionX : newBulbLight2PositionX,
-         bulbLight2PositionZ : newBulbLight2PositionZ,   
-         bulbLight3PositionX : newBulbLight3PositionX,
-         bulbLight3PositionZ : newBulbLight3PositionZ,
+         // middleBulbDistance : newMiddleBulbDistance,
+         // bottomBulbDistance : newBottomBulbDistance,
+         // topBulbDistance : newTopBulbDistance,
+         // middleBulbPositionX : newMiddleBulbPositionX,
+         // middleBulbPositionZ : newMiddleBulbPositionZ,   
+         // bottomBulbPositionX : newBottomBulbPositionX,
+         // bottomBulbPositionZ : newBottomBulbPositionZ,   
+         // topBulbPositionX : newTopBulbPositionX,
+         // topBulbPositionZ : newTopBulbPositionZ,
       }, () => {
          this.shape.rotation.x = this.state.shapeRotationX;
          this.shape.rotation.y = this.state.shapeRotationY;   
-         this.bulbLight1.position.x = this.state.bulbLight1PositionX;
-         this.bulbLight1.position.z = this.state.bulbLight1PositionZ;   
-         this.bulbLight2.position.x = this.state.bulbLight2PositionX;
-         this.bulbLight2.position.z = this.state.bulbLight2PositionZ;   
-         this.bulbLight3.position.x = this.state.bulbLight3PositionX;
-         this.bulbLight3.position.z = this.state.bulbLight3PositionZ;
+         // this.middleBulb.position.x = this.state.middleBulbPositionX;
+         // this.middleBulb.position.z = this.state.middleBulbPositionZ;   
+         // this.bottomBulb.position.x = this.state.bottomBulbPositionX;
+         // this.bottomBulb.position.z = this.state.bottomBulbPositionZ;   
+         // this.topBulb.position.x = this.state.topBulbPositionX;
+         // this.topBulb.position.z = this.state.topBulbPositionZ;
       });
 
       this.renderScene()
@@ -203,8 +223,24 @@ class Shape extends React.Component {
    };
 
    componentWillReceiveProps(nextProps) {
-      const { sizeValue: sizeValueNext, color: colorNext, vertices: verticesNext, lightsColor: lightsColorNext  } = nextProps;
-      this.setState({ sizeValue: sizeValueNext, color: colorNext, vertices: verticesNext, lightsColor: lightsColorNext }, () => this.createObject());
+      const { 
+         sizeValue: sizeValueNext, 
+         color: colorNext, 
+         vertices: verticesNext, 
+         lightsColor: lightsColorNext, 
+         middleBulbSpeed: middleBulbSpeedNext,
+         topBulbSpeed: topBulbSpeedNext,
+         bottomBulbSpeed: bottomBulbSpeedNext 
+      } = nextProps;
+      this.setState({ 
+         sizeValue: sizeValueNext, 
+         color: colorNext, 
+         vertices: verticesNext, 
+         lightsColor: lightsColorNext, 
+         middleBulbSpeed: middleBulbSpeedNext,
+         topBulbSpeed: topBulbSpeedNext,
+         bottomBulbSpeed: bottomBulbSpeedNext 
+      }, () => this.createObject());
    };
 
    render() {
@@ -259,19 +295,19 @@ export default Shape;
       //    }
       // );
 
-      // let newBulbLight1RotateY = this.bulbLight1.rotation.y += 0.03;
-// let newBulbLight2RotateY = this.bulbLight2.rotation.y += 0.02;
-// let newBulbLight3RotateY = this.bulbLight3.rotation.y -= 0.01;
-// bulbLight1RotateY : newBulbLight1RotateY,
-// bulbLight2RotateY : newBulbLight2RotateY,
-// bulbLight3RotateY : newBulbLight3RotateY,
-// this.bulbLight1.rotation.y = this.state.bulbLight1RotateY;
-// this.bulbLight2.rotation.y = this.state.bulbLight2RotateY;
-// this.bulbLight3.rotation.y = this.state.bulbLight3RotateY;
+      // let newMiddleBulbRotateY = this.middleBulb.rotation.y += 0.03;
+// let newBottomBulbRotateY = this.bottomBulb.rotation.y += 0.02;
+// let newTopBulbRotateY = this.topBulb.rotation.y -= 0.01;
+// MiddleBulbRotateY : newMiddleBulbRotateY,
+// BottomBulbRotateY : newBottomBulbRotateY,
+// TopBulbRotateY : newTopBulbRotateY,
+// this.middleBulb.rotation.y = this.state.middleBulbRotateY;
+// this.bottomBulb.rotation.y = this.state.bottomBulbRotateY;
+// this.topBulb.rotation.y = this.state.topBulbRotateY;
 
-// bulbLight1RotateY : 0,
-// bulbLight2RotateY : 0,
-// bulbLight3RotateY : 0,
-// this.bulbLight1.rotation.y = this.state.bulbLight1RotateY;
-// this.bulbLight2.rotation.y = this.state.bulbLight2RotateY;
-// this.bulbLight3.rotation.y = this.state.bulbLight3RotateY;
+// MiddleBulbRotateY : 0,
+// BottomBulbRotateY : 0,
+// TopBulbRotateY : 0,
+// this.middleBulb.rotation.y = this.state.middleBulbRotateY;
+// this.bottomBulb.rotation.y = this.state.bottomBulbRotateY;
+// this.topBulb.rotation.y = this.state.topBulbRotateY;
