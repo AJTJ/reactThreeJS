@@ -24,6 +24,8 @@
    }
 }
 
+//BULB CONTROLS
+
 .bulbSpeed__wrapper {
    display: flex;
    justify-content: space-around;
@@ -38,22 +40,39 @@
    flex-direction: column;
 }
 
+
+//NUMBER SPINNERS
+
 .numberInput {
    background: transparent;
 }
 
+
+//HIDE/SHOW MENU
 .controlsHidden {
    left: -315px;
 }
 
+.showControlsButton {
+   position: absolute;
+   top: 0;
+   right: -50px;
+}
+
+
+//LABEL
 .labelDiv {
    margin: 5px 0;
 }
 
+
+//SLIDER DIV
 .sliderDiv {
    margin: 10px 0;
 }
 
+
+//COLOR BUTTON ZONE
 .colorButtonDiv {
    display: flex;
    justify-content: space-around;
@@ -67,6 +86,8 @@
    background: transparent;
 }
 
+
+//SOCIALS ZONE
 .nameSocials {
    display: flex;
    align-items: center;
@@ -86,10 +107,4 @@
    a {
       padding: 5px 5px;
    }
-}
-
-.showControlsButton {
-   position: absolute;
-   top: 0;
-   right: -50px;
 }

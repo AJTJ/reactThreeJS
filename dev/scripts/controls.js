@@ -28,6 +28,7 @@ class Controls extends React.Component {
                <div className="labelDiv">
                   <label className="sliderLabel">Shape Vertices</label>
                </div>
+               
                <input onChange={this.props.verticesChange} className="slider" type="range" min="0" max="5" value={this.props.vertices} />
             </div>
 
@@ -38,6 +39,7 @@ class Controls extends React.Component {
                      <label htmlFor="">Top Bulb Speed</label>
                   </div>
                   <div>
+                     {/* <NumericInput onChange={this.props.topBulbSpeedChange} className="numberInput" step={0.001} max={1} min={-1} value={this.props.topBulbSpeed} /> */}
                      <input type="number" onChange={this.props.topBulbSpeedChange} className="numberInput" step={0.001} max={1} min={-1} value={this.props.topBulbSpeed} />
                   </div>
                </div>
