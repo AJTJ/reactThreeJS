@@ -1,5 +1,7 @@
 import React from 'react';
 import * as THREE from 'three';
+// import React3 from 'react-three-renderer';
+// import OBJLoader from 'three-obj-loader';
 
 class Shape extends React.Component {
    constructor() {
@@ -19,6 +21,9 @@ class Shape extends React.Component {
          middleBulbSpeed : 0.004,
          topBulbSpeed: 0.003,
          bottomBulbSpeed: 0.005,
+         middleBulbLum : 300,
+         topBulbLum: 300,
+         bottomBulbLum: 300,
          // middleBulbPositionX : 0,
          // middleBulbPositionZ : 0,         
          // bottomBulbPositionX : 0,
@@ -47,7 +52,7 @@ class Shape extends React.Component {
    createObject() {
 
       //STATES IMPORTED
-      let { sizeValue, color, vertices, lightsColor } = this.state;
+      let { sizeValue, color, vertices, lightsColor, middleBulbLum, topBulbLum, bottomBulbLum } = this.state;
 
       let scene = new THREE.Scene();
 
@@ -74,16 +79,17 @@ class Shape extends React.Component {
       });
 
       //BULB 1
-      let MiddleBulb = new THREE.PointLight( lightsColor, 1, 80, 5 );
+      let MiddleBulb = new THREE.PointLight( lightsColor, 1, middleBulbLum, 20 );
       MiddleBulb.add( new THREE.Mesh( bulbGeometry, bulbMat ) );
       MiddleBulb.position.set( -7.5, 0, 10 );
 
       //BULB 2
-      let BottomBulb = new THREE.PointLight( lightsColor, 1, 80, 5 );
+      let BottomBulb = new THREE.PointLight( lightsColor, 1, bottomBulbLum, 20 );
       BottomBulb.add( new THREE.Mesh( bulbGeometry, bulbMat ) );
       BottomBulb.position.set( 0, -9, 0 );      
+      
       //BULB 3
-      let TopBulb = new THREE.PointLight( lightsColor, 1, 80, 5 );
+      let TopBulb = new THREE.PointLight(lightsColor, 1, topBulbLum, 20 );
       TopBulb.add( new THREE.Mesh( bulbGeometry, bulbMat ) );
       TopBulb.position.set( 0, 9, 0 );     
 
@@ -100,7 +106,7 @@ class Shape extends React.Component {
          metalness: 1,
          // bumpScale: 0.0005
       });
-      let floorGeometry = new THREE.PlaneBufferGeometry( 300, 300, 8, 8 );
+      let floorGeometry = new THREE.PlaneBufferGeometry( 900, 900, 8, 8 );
       let floorMesh = new THREE.Mesh( floorGeometry, floorMat );
       floorMesh.rotation.x = -Math.PI / 2.0;
       floorMesh.position.set( 0, -10, 0 );
@@ -109,6 +115,30 @@ class Shape extends React.Component {
       let floorMesh2 = new THREE.Mesh( floorGeometry, floorMat );
       floorMesh2.rotation.x = -Math.PI / 2.0;
       floorMesh2.position.set( 0, 10, 0 );
+
+      // let loader = new THREE.OBJLoader();
+      // loader.load(
+      //    // resource URL
+      //    './assets/dummy.obj',
+      //    // called when resource is loaded
+      //    function ( object ) {
+
+      //       scene.add( object );
+
+      //    },
+      //    // called when loading is in progresses
+      //    function ( xhr ) {
+
+      //       console.log( ( xhr.loaded / xhr.total * 100 ) + '% loaded' );
+
+      //    },
+      //    // called when loading has errors
+      //    function ( error ) {
+
+      //       console.log( 'An error happened' );
+
+      //    }
+      // );
 
       //OBJECTS IN SCENE
       scene.add( MiddleBulb );
@@ -193,7 +223,8 @@ class Shape extends React.Component {
       this.setState({
          //STORING STATE FOR THE SHAPES ROTATION DISTANCE, FOR WHEN A NEW SHAPE IS SPAWNED
          shapeRotationX : newShapeStateX,
-         shapeRotationY : newShapeStateY,   
+         shapeRotationY : newShapeStateY,
+
          // middleBulbDistance : newMiddleBulbDistance,
          // bottomBulbDistance : newBottomBulbDistance,
          // topBulbDistance : newTopBulbDistance,
@@ -230,7 +261,10 @@ class Shape extends React.Component {
          lightsColor: lightsColorNext, 
          middleBulbSpeed: middleBulbSpeedNext,
          topBulbSpeed: topBulbSpeedNext,
-         bottomBulbSpeed: bottomBulbSpeedNext 
+         bottomBulbSpeed: bottomBulbSpeedNext,
+         middleBulbLum: middleBulbLumNext,
+         topBulbLum: topBulbLumNext,
+         bottomBulbLum: bottomBulbLumNext 
       } = nextProps;
       this.setState({ 
          sizeValue: sizeValueNext, 
@@ -239,7 +273,10 @@ class Shape extends React.Component {
          lightsColor: lightsColorNext, 
          middleBulbSpeed: middleBulbSpeedNext,
          topBulbSpeed: topBulbSpeedNext,
-         bottomBulbSpeed: bottomBulbSpeedNext 
+         bottomBulbSpeed: bottomBulbSpeedNext,
+         middleBulbLum: middleBulbLumNext,
+         topBulbLum: topBulbLumNext,
+         bottomBulbLum: bottomBulbLumNext 
       }, () => this.createObject());
    };
 

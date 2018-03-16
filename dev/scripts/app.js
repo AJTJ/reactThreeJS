@@ -19,16 +19,19 @@ class App extends React.Component {
          middleBulbSpeed: 0.004,
          topBulbSpeed: 0.003,
          bottomBulbSpeed: 0.005,
+         middleBulbLum: 300,
+         topBulbLum: 300,
+         bottomBulbLum: 300,
       }   
 
-      this.sizeChange = this.sizeChange.bind(this);
+      // this.sizeChange = this.sizeChange.bind(this);
       this.getRandomColor = this.getRandomColor.bind(this);
       this.getRandomLightsColor = this.getRandomLightsColor.bind(this);
       this.toggleControls = this.toggleControls.bind(this);
-      this.verticesChange = this.verticesChange.bind(this);
-      this.middleBulbSpeedChange = this.middleBulbSpeedChange.bind(this);
-      this.topBulbSpeedChange = this.topBulbSpeedChange.bind(this);
-      this.bottomBulbSpeedChange = this.bottomBulbSpeedChange.bind(this);
+      // this.verticesChange = this.verticesChange.bind(this);
+      // this.middleBulbSpeedChange = this.middleBulbSpeedChange.bind(this);
+      // this.topBulbSpeedChange = this.topBulbSpeedChange.bind(this);
+      // this.bottomBulbSpeedChange = this.bottomBulbSpeedChange.bind(this);
    }
 
 
@@ -49,28 +52,27 @@ class App extends React.Component {
       })
    }
 
-   sizeChange(e) {
-      this.setState({sizeValue: e.target.value});
-   }
+   // sizeChange(e) {
+   //    this.setState({sizeValue: e.target.value});
+   // }
 
-   verticesChange(e) {
-      this.setState({vertices: e.target.value});
-   }
+   // verticesChange(e) {
+   //    this.setState({vertices: e.target.value});
+   // }
 
-   middleBulbSpeedChange(e) {
-      // e.preventDefault();
-      this.setState({middleBulbSpeed: e.target.value});
-   }
+   // middleBulbSpeedChange(e) {
+   //    // e.preventDefault();
+   //    this.setState({middleBulbSpeed: e});
+   // }
 
-   topBulbSpeedChange(e) {
-      // e.preventDefault();
-      this.setState({topBulbSpeed: e.target.value});
-   }
+   // topBulbSpeedChange(e) {
+   //    this.setState({topBulbSpeed: e});
+   // }
 
-   bottomBulbSpeedChange(e) {
-      // e.preventDefault();
-      this.setState({bottomBulbSpeed: e.target.value});
-   }
+   // bottomBulbSpeedChange(e) {
+   //    // e.preventDefault();
+   //    this.setState({bottomBulbSpeed: e});
+   // }
 
    //FUNCTION FOR TOGGLING THE VISIBILITY OF THE CONTROL BOX
    toggleControls(e) {
@@ -81,23 +83,31 @@ class App extends React.Component {
     render() {
       return (
          <div className="mainDiv" >
+            { this.state.controlsHidden ? <a className="hamburger" onClick={this.toggleControls} href=""><i  className="fas fa-bars fa-2x"></i></a>
+            : null}
             <Controls 
                vertices={this.state.vertices} 
-               verticesChange={this.verticesChange} 
+               verticesChange={(e) => this.setState({ vertices: e.target.value })} 
                controlsHidden={this.state.controlsHidden} 
                toggleControls={this.toggleControls} 
                sizeValue={this.state.sizeValue} 
-               sizeChange={this.sizeChange} 
+               sizeChange={(e) => this.setState({ sizeValue: e.target.value })} 
                getRandomColor={this.getRandomColor} 
                color={this.state.color} 
                getRandomLightsColor={this.getRandomLightsColor} 
                lightsColor={this.state.lightsColor} 
                middleBulbSpeed={this.state.middleBulbSpeed}
-               middleBulbSpeedChange={this.middleBulbSpeedChange}
                topBulbSpeed={this.state.topBulbSpeed}
-               topBulbSpeedChange={this.topBulbSpeedChange}
                bottomBulbSpeed={this.state.bottomBulbSpeed}
-               bottomBulbSpeedChange={this.bottomBulbSpeedChange}
+               topBulbSpeedChange={(e) => this.setState({ topBulbSpeed: e })}
+               middleBulbSpeedChange={(e) => this.setState({ middleBulbSpeed: e })}
+               bottomBulbSpeedChange={(e) => this.setState({ bottomBulbSpeed: e })}
+               middleBulbLum={this.state.middleBulbLum}
+               topBulbLum={this.state.topBulbLum}
+               bottomBulbLum={this.state.bottomBulbLum}
+               topBulbLumChange={(e) => this.setState({ topBulbLum: e })}
+               middleBulbLumChange={(e) => this.setState({ middleBulbLum: e })}
+               bottomBulbLumChange={(e) => this.setState({ bottomBulbLum: e })}
             />
             <Shape 
                lightsColor={this.state.lightsColor} 
@@ -107,6 +117,9 @@ class App extends React.Component {
                middleBulbSpeed={this.state.middleBulbSpeed}
                topBulbSpeed={this.state.topBulbSpeed}
                bottomBulbSpeed={this.state.bottomBulbSpeed}
+               middleBulbLum={this.state.middleBulbLum}
+               topBulbLum={this.state.topBulbLum}
+               bottomBulbLum={this.state.bottomBulbLum}
             />
         </div>
       )
