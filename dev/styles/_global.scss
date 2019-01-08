@@ -3,44 +3,44 @@ $mainFont: 'Dosis', sans-serif;
 $mainColor: rgba(218, 218, 218, 0.904);
 
 h1, h2, h3, h4, h5, h6 {
-  font-family: $mainFont;
-  color: $mainColor;
-  margin: 0;
+	font-family: $mainFont;
+	color: $mainColor;
+	margin: 0;
 }
 
 h1 {
-  font-size: 22px;
-  padding: 15px 0 5px;
+	font-size: 22px;
+	padding: 15px 0 5px;
 }
 
 h2 {
-  font-size: 15px;
-  padding: 5px 0;
+	font-size: 15px;
+	padding: 5px 0;
 }
 
 p, label, button, span, input {
-  font-size: 13px;
+	font-size: 13px;
 }
 
 .nameSocials {
-  span {
-    font-size: 13px;
-  }
+	span {
+		font-size: 13px;
+	}
 }
 
 body, input, a {
-  font-family: $mainFont;
-  color: $mainColor;
+	font-family: $mainFont;
+	color: $mainColor;
 }
 
 p {
-  margin: 2px;
+	margin: 2px;
 }
 
 span {
-  font-weight: 700;
+	font-weight: 700;
 }
 
 a {
-  text-decoration: none;
+	text-decoration: none;
 }
